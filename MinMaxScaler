@@ -1,0 +1,44 @@
+public Double[,] MinMaxScaler(Double[,] data)
+        {
+            string function_name = "MinMaxScaler";
+            double[,] result=null;
+            double[] data_1DCol;
+            double range=1;
+
+            try
+            {
+                if ((data.GetLength(0) > 0) && (data.GetLength(1) > 0))
+                {
+                    int data_row = data.GetLength(0);
+                    int data_col = data.GetLength(1);
+                    result = new Double[data_row, data_col];
+                    data_1DCol = new double[data_row];
+
+                    for (int col_cnt = 0; col_cnt < data_col; col_cnt++)
+                    {
+                        double minval = 0;
+                        double maxval = 0;
+
+                        for (int row_cnt = 0; row_cnt < data.GetLength(0); row_cnt++)
+                        {
+                            data_1DCol[row_cnt] = (data[row_cnt, col_cnt]);
+                        }
+
+                        minval = data_1DCol.Min();
+                        maxval = data_1DCol.Max();
+
+                        range = maxval - minval;
+                        for (int samp = 0; samp < data.GetLength(0); samp++)
+                        {
+                            result[samp, col_cnt] = (data[samp, col_cnt] - minval) / range;
+
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(function_name + ":" + e.Message);
+            }
+            return(result);
+        }
